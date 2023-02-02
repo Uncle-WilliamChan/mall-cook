@@ -12,6 +12,7 @@
 const Router = require('koa-router')
 const axios = require('axios')
 const fs = require('fs')
+const path = require('path')
 const projectModel = require('../models/project')
 const helper = require('../dbhelper/projectDbhelper')
 const channel = require('../utils/channel')
@@ -141,7 +142,7 @@ router.post('/getWXQr', async (ctx, next) => {
 
   let fileName = `/img/${Date.now()}${tools.getRandomCode(6)}.jpg`
 
-  fs.writeFile(fileName, buffer, err => {
+  fs.writeFile(`${path.resolve('./public')}${fileName}`, buffer, err => {
     if (!err) {
       console.log('图片生成成功!')
     }
