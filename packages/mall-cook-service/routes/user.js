@@ -40,12 +40,12 @@ router.post('/register', async (ctx, next) => {
 // 登录
 router.post('/login', async (ctx, next) => {
     console.log('登录...');
-    
+
     let data = ctx.request.body
     const user = await helper.findUser({ account: data.account })
     if (!user) return ctx.body = { message: '账户不存在', status: '10001' }
     if (user.password !== data.password) return ctx.body = { message: '账户或密码不正确', status: '10001' }
-    let token = addToken({ id: user.id, account: user.account })
+    let token = addToken({ id: user._id, account: user.account })
     let { _id, account, userName, portrait } = user
     let userInfo = { userId: _id, account, userName, portrait }
     ctx.body = { message: '登录成功', status: '10000', token, userInfo }
